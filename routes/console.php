@@ -23,4 +23,8 @@ Schedule::command(FetchVeloStationsCommand::class)->everyTwoMinutes();
 Schedule::command(FetchOfficientCalendarCommand::class)->everyTenMinutes();
 Schedule::command(FetchTopArtistsCommand::class)->everyTenMinutes();
 Schedule::command(FetchClimateDataCommand::class)->everyMinute();
-Schedule::command(FetchCookieClubOverviewCommand::class)->hourly();
+Schedule::command(FetchCookieClubOverviewCommand::class)
+    ->everyFiveMinutes()
+    ->weekdays()
+    ->between('08:00', '18:00')
+    ->timezone('Europe/Brussels');
