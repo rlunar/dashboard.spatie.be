@@ -5,7 +5,6 @@ use App\Support\Weekplanning;
 use App\Dashboard\ScreenAvailability;
 use App\Http\Middleware\AccessToken;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
@@ -108,22 +107,8 @@ Route::middleware(AccessToken::class)->group(function () {
         $hasConditionalScreens = $screens
             ->contains(fn (array $screen): bool => isset($screen['condition']));
 
-        $members = collect();
-
-        if (
-            ! $showWeekplanning
-            && $screens->contains(fn (array $screen) => ($screen['view'] ?? null) === 'dashboard.screens.main')
-        ) {
-            $members = collect(cache()->remember('members', now()->addDay(), function () {
-                return Http::withToken(config('services.spatie.token'))
-                    ->get('https://spatie.be/api/members')
-                    ->json();
-            }));
-        }
-
         return view('dashboard', [
             'loadedDeployId' => Deploy::latest('id')->value('id') ?? 0,
-            'members' => $members,
             'schedule' => $schedule,
             'screens' => $screens,
             'availableScreenNames' => $availableScreenNames,

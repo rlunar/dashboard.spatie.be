@@ -5,19 +5,7 @@
 
 <livewire:velo-tile position="a15:a20" />
 
-@foreach($members->split(2) as $groupIndex => $group)
-    @php($column = $groupIndex > 0 ? 'c' : 'b')
-    @php($row = 0)
-
-    @foreach($group as $memberIndex => $member)
-        <livewire:team-member-tile
-            position="{{ $column }}{{ ++$row }}:{{ $column }}{{ ++$row }}"
-            name="{{ strtolower($member['name']) }}"
-            :avatar="gravatar($member['email'])"
-            :birthday="$member['birthday']"
-        />
-    @endforeach
-@endforeach
+<livewire:cookie-club-tile position="b1:c6" />
 
 <livewire:calendar-tile position="e7:e20" :calendar-id="config('google-calendar.calendar_id')" />
 

@@ -55,15 +55,7 @@ class DashboardTest extends TestCase
             ],
         ]);
 
-        Http::fake([
-            'https://spatie.be/api/members' => Http::response([
-                [
-                    'name' => 'Tim',
-                    'email' => 'tim@spatie.be',
-                    'birthday' => '1989-05-18',
-                ],
-            ]),
-        ]);
+        Http::fake();
 
         $this->travelTo(CarbonImmutable::parse('2026-04-13 11:59:00', 'Europe/Brussels'));
 
@@ -71,7 +63,7 @@ class DashboardTest extends TestCase
             ->assertOk()
             ->assertDontSee('Weekplanning!');
 
-        Http::assertSentCount(1);
+        Http::assertNothingSent();
     }
 
     public function testItRendersAConfiguredBladeScreen(): void
@@ -90,15 +82,7 @@ class DashboardTest extends TestCase
             ],
         ]);
 
-        Http::fake([
-            'https://spatie.be/api/members' => Http::response([
-                [
-                    'name' => 'Tim',
-                    'email' => 'tim@spatie.be',
-                    'birthday' => '1989-05-18',
-                ],
-            ]),
-        ]);
+        Http::fake();
 
         $this->travelTo(CarbonImmutable::parse('2026-04-13 11:59:00', 'Europe/Brussels'));
 
@@ -111,9 +95,9 @@ class DashboardTest extends TestCase
                     'duration_in_seconds' => 45,
                 ],
             ])
-            ->assertSee('team-member-tile', false);
+            ->assertSee('cookie-club-tile', false);
 
-        Http::assertSentCount(1);
+        Http::assertNothingSent();
     }
 
     public function testItRendersAConfiguredUrlScreen(): void
@@ -193,15 +177,7 @@ class DashboardTest extends TestCase
             ],
         ]);
 
-        Http::fake([
-            'https://spatie.be/api/members' => Http::response([
-                [
-                    'name' => 'Tim',
-                    'email' => 'tim@spatie.be',
-                    'birthday' => '1989-05-18',
-                ],
-            ]),
-        ]);
+        Http::fake();
 
         $this->travelTo(CarbonImmutable::parse('2026-04-13 11:59:00', 'Europe/Brussels'));
 
@@ -214,9 +190,9 @@ class DashboardTest extends TestCase
                 ],
             ])
             ->assertSee('data-dashboard-screen', false)
-            ->assertSee('team-member-tile', false);
+            ->assertSee('cookie-club-tile', false);
 
-        Http::assertSentCount(1);
+        Http::assertNothingSent();
     }
 
     public function testItRendersTheFourProductScreensInOrderWithoutLoadingFathom(): void
@@ -259,9 +235,7 @@ class DashboardTest extends TestCase
             'duration_in_seconds' => $scheduleEntry[1],
         ])->all());
 
-        Http::fake([
-            'https://spatie.be/api/members' => Http::response([]),
-        ]);
+        Http::fake();
 
         $this->travelTo(CarbonImmutable::parse('2026-04-13 11:59:00', 'Europe/Brussels'));
 
@@ -281,7 +255,7 @@ class DashboardTest extends TestCase
             ->assertSee("document.addEventListener('livewire:initialized'", false);
 
         $this->assertSame(4, substr_count($response->getContent(), 'data-product-analytics-component='));
-        Http::assertSentCount(1);
+        Http::assertNothingSent();
     }
 
     public function testItCanScheduleTheSameScreenMoreThanOnceWithoutRenderingItMoreThanOnce(): void
@@ -353,9 +327,7 @@ class DashboardTest extends TestCase
             ],
         ]);
 
-        Http::fake([
-            'https://spatie.be/api/members' => Http::response([]),
-        ]);
+        Http::fake();
 
         $this->travelTo(CarbonImmutable::parse('2026-04-13 11:59:00', 'Europe/Brussels'));
 
@@ -368,7 +340,7 @@ class DashboardTest extends TestCase
             ->assertSee('data-screen-name="conditional"', false)
             ->assertSee('data-screen-name="main"', false);
 
-        Http::assertSentCount(1);
+        Http::assertNothingSent();
     }
 }
 

@@ -11,9 +11,7 @@ class ExampleTest extends TestCase
     {
         config()->set('app.access_token', 'test-token');
 
-        Http::fake([
-            'https://spatie.be/api/members' => Http::response([]),
-        ]);
+        Http::fake();
 
         $this->get('/?access-token=test-token')
             ->assertOk();

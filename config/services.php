@@ -69,6 +69,10 @@ return [
         'token' => env('CLIMATE_API_TOKEN'),
     ],
 
+    'cookie_club' => [
+        'overview_url' => 'https://cookie-club.spatie.be/api/public/overview',
+    ],
+
     'officient' => [
         'token' => env('OFFICIENT_API_TOKEN'),
     ],
