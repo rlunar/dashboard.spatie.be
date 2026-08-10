@@ -96,7 +96,7 @@ return [
         ],
         [
             'screen' => 'mailcoach',
-            'duration_in_seconds' => 60,
+            'duration_in_seconds' => 20,
         ],
         [
             'screen' => 'now-playing',
@@ -104,7 +104,7 @@ return [
         ],
         [
             'screen' => 'flare',
-            'duration_in_seconds' => 60,
+            'duration_in_seconds' => 20,
         ],
         [
             'screen' => 'now-playing',
@@ -112,7 +112,7 @@ return [
         ],
         [
             'screen' => 'spatie',
-            'duration_in_seconds' => 60,
+            'duration_in_seconds' => 20,
         ],
         [
             'screen' => 'now-playing',
@@ -120,7 +120,7 @@ return [
         ],
         [
             'screen' => 'there-there',
-            'duration_in_seconds' => 60,
+            'duration_in_seconds' => 20,
         ],
         [
             'screen' => 'now-playing',
