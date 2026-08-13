@@ -5,6 +5,7 @@
 <script>
     const loadedDeployId = @js($loadedDeployId);
     const deployStatusUrl = new URL(@js(route('deployStatus', absolute: false)), window.location.origin);
+    const transientLivewireFailureStatuses = new Set([502, 503, 504]);
 
     deployStatusUrl.search = window.location.search;
 
@@ -44,6 +45,18 @@
     window.setTimeout(function () {
         window.location.reload();
     }, {{ $weekplanningReloadInMilliseconds }});
+
+    document.addEventListener('livewire:init', function () {
+        Livewire.hook('request', ({ fail }) => {
+            fail(({ status, preventDefault }) => {
+                if (! transientLivewireFailureStatuses.has(status)) {
+                    return;
+                }
+
+                preventDefault();
+            });
+        });
+    });
 
     document.addEventListener('livewire:initialized', function () {
         const schedule = @js($schedule);
