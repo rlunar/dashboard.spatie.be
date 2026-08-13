@@ -64,7 +64,13 @@ class FetchOfficientCalendarCommand extends Command
                 try {
                     $calendar = $officient->getDayCalendar($person['id'], $day);
 
-                    $events = collect($calendar['time_off'] ?? [])
+                    $timeOff = collect($calendar['time_off'] ?? []);
+
+                    if ($this->isUnscheduledDay($timeOff)) {
+                        continue;
+                    }
+
+                    $events = $timeOff
                         ->flatMap(fn (array $dayData) => $dayData['events'] ?? []);
 
                     $status = $this->determineStatus($events, $wfhKeywords);
@@ -172,5 +178,13 @@ class FetchOfficientCalendarCommand extends Command
         }
 
         return 'absent';
+    }
+
+    private function isUnscheduledDay(Collection $timeOff): bool
+    {
+        return $timeOff->contains(fn (array $dayData) =>
+            array_key_exists('scheduled_minutes', $dayData)
+            && (int) $dayData['scheduled_minutes'] === 0
+        );
     }
 }
